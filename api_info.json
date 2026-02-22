@@ -1,0 +1,20 @@
+{
+  "slug": "clickupcom",
+  "title": "clickup20",
+  "description": "Polls is a simple API allowing consumers to view polls and vote in them.",
+  "base_url": "https://polls.apiblueprint.org",
+  "endpoints": [
+    {
+      "path": "/questions",
+      "method": "get",
+      "summary": "List All Questions",
+      "operation_id": "List All Questions"
+    },
+    {
+      "path": "/questions",
+      "method": "post",
+      "summary": "Create a New Question",
+      "operation_id": "Create a New Question"
+    }
+  ]
+}

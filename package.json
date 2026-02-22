@@ -1,16 +1,14 @@
 {
   "name": "@ktmcp-cli/clickupcom",
   "version": "1.0.0",
-  "description": "Production-ready CLI for ClickUp API - project management, tasks, spaces",
+  "description": "Production-ready CLI for clickup20",
   "type": "module",
   "main": "src/index.js",
   "bin": {
     "clickupcom": "bin/clickupcom.js"
   },
   "keywords": [
-    "clickup",
-    "project-management",
-    "tasks",
+    "clickupcom",
     "cli",
     "api",
     "ktmcp"

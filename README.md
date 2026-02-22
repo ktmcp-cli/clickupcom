@@ -1,34 +1,22 @@
+![Banner](https://raw.githubusercontent.com/ktmcp-cli/clickupcom/main/banner.svg)
+
 > "Six months ago, everyone was talking about MCPs. And I was like, screw MCPs. Every MCP would be better as a CLI."
 >
 > — [Peter Steinberger](https://twitter.com/steipete), Founder of OpenClaw
 > [Watch on YouTube (~2:39:00)](https://www.youtube.com/@lexfridman) | [Lex Fridman Podcast #491](https://lexfridman.com/peter-steinberger/)
 
-# ClickUp CLI
+# clickup20 CLI
 
-A production-ready command-line interface for the [ClickUp](https://clickup.com) API. Manage teams, spaces, folders, lists, tasks, and time tracking directly from your terminal.
+> **⚠️ Unofficial CLI** - Not officially sponsored or affiliated with clickup20.
 
-> **Disclaimer**: This is an unofficial CLI tool and is not affiliated with, endorsed by, or supported by ClickUp.
+A production-ready command-line interface for clickup20 — Polls is a simple API allowing consumers to view polls and vote in them.
 
 ## Features
 
-- **Teams** — List and manage your ClickUp teams
-- **Spaces** — Create and manage workspaces
-- **Folders** — Organize your projects with folders
-- **Lists** — Manage task lists within folders
-- **Tasks** — Create, update, delete, and view tasks
-- **Time Tracking** — Start/stop timers and view time entries
+- **Full API Access** — All endpoints accessible via CLI
 - **JSON output** — All commands support `--json` for scripting
-- **Colorized output** — Clean, readable terminal output
-
-## Why CLI > MCP
-
-MCP servers are complex, stateful, and require a running server process. A CLI is:
-
-- **Simpler** — Just a binary you call directly
-- **Composable** — Pipe output to `jq`, `grep`, `awk`, and other tools
-- **Scriptable** — Use in shell scripts, CI/CD pipelines, cron jobs
-- **Debuggable** — See exactly what's happening with `--json` flag
-- **AI-friendly** — AI agents can call CLIs just as easily as MCPs, with less overhead
+- **Colorized output** — Clean terminal output with chalk
+- **Configuration management** — Store API keys securely
 
 ## Installation
 
@@ -36,185 +24,54 @@ MCP servers are complex, stateful, and require a running server process. A CLI i
 npm install -g @ktmcp-cli/clickupcom
 ```
 
-## Authentication Setup
-
-ClickUp uses API key authentication.
-
-### 1. Get Your API Key
-
-1. Go to your ClickUp settings
-2. Navigate to **Apps**
-3. Generate an API token
-4. Copy your API key
-
-### 2. Configure the CLI
+## Quick Start
 
 ```bash
+# Configure API key
 clickupcom config set --api-key YOUR_API_KEY
-```
 
-### 3. Verify
+# Make an API call
+clickupcom call
 
-```bash
-clickupcom teams list
+# Get help
+clickupcom --help
 ```
 
 ## Commands
 
-### Configuration
+### Config
 
 ```bash
-# Set API key
 clickupcom config set --api-key <key>
-
-# Show current config
+clickupcom config set --base-url <url>
 clickupcom config show
 ```
 
-### Teams
+### API Calls
 
 ```bash
-# List all teams
-clickupcom teams list
-```
-
-### Spaces
-
-```bash
-# List spaces
-clickupcom spaces list --team-id <team-id>
-
-# Get a specific space
-clickupcom spaces get <space-id>
-
-# Create a space
-clickupcom spaces create --team-id <team-id> --name "Marketing"
-```
-
-### Folders
-
-```bash
-# List folders
-clickupcom folders list --space-id <space-id>
-
-# Create a folder
-clickupcom folders create --space-id <space-id> --name "Q1 2024"
-```
-
-### Lists
-
-```bash
-# List all lists in a folder
-clickupcom lists list --folder-id <folder-id>
-
-# Create a list
-clickupcom lists create --folder-id <folder-id> --name "Sprint 1"
-```
-
-### Tasks
-
-```bash
-# List tasks
-clickupcom tasks list --list-id <list-id>
-
-# Get a specific task
-clickupcom tasks get <task-id>
-
-# Create a task
-clickupcom tasks create --list-id <list-id> --name "Fix bug" --description "Description here"
-
-# Update a task
-clickupcom tasks update <task-id> --name "New name" --status "in progress"
-
-# Delete a task
-clickupcom tasks delete <task-id>
-```
-
-### Time Tracking
-
-```bash
-# List time entries
-clickupcom time list --team-id <team-id>
-
-# Start a timer
-clickupcom time start --team-id <team-id> --task-id <task-id> --description "Working on feature"
-
-# Stop the timer
-clickupcom time stop --team-id <team-id>
+clickupcom call            # Make API call
+clickupcom call --json     # JSON output
 ```
 
 ## JSON Output
 
-All commands support `--json` for machine-readable output:
+All commands support `--json` for structured output.
 
-```bash
-# Get all tasks as JSON
-clickupcom tasks list --list-id <list-id> --json
+## API Documentation
 
-# Pipe to jq for filtering
-clickupcom tasks list --list-id <list-id> --json | jq '.[] | select(.status.status == "in progress")'
-```
+Base URL: `https://polls.apiblueprint.org`
 
-## Examples
+For full API documentation, visit the official docs.
 
-### Create a complete project structure
+## Why CLI > MCP?
 
-```bash
-# First, get your team ID
-clickupcom teams list
+No server to run. No protocol overhead. Just install and go.
 
-# Create a space
-clickupcom spaces create --team-id <team-id> --name "Product Development"
-
-# Create a folder
-clickupcom folders create --space-id <space-id> --name "Q1 2024"
-
-# Create a list
-clickupcom lists create --folder-id <folder-id> --name "Sprint 1"
-
-# Create tasks
-clickupcom tasks create --list-id <list-id> --name "Setup CI/CD pipeline"
-clickupcom tasks create --list-id <list-id> --name "Design database schema"
-```
-
-### Track time on a task
-
-```bash
-# Start timer
-clickupcom time start --team-id <team-id> --task-id <task-id> --description "Implementing feature"
-
-# Work on the task...
-
-# Stop timer
-clickupcom time stop --team-id <team-id>
-```
-
-## Contributing
-
-Issues and pull requests are welcome at [github.com/ktmcp-cli/clickupcom](https://github.com/ktmcp-cli/clickupcom).
+- **Simpler** — Just a binary you call directly
+- **Composable** — Pipe to `jq`, `grep`, `awk`
+- **Scriptable** — Works in cron jobs, CI/CD, shell scripts
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
-
----
-
-Part of the [KTMCP CLI](https://killthemcp.com) project — replacing MCPs with simple, composable CLIs.
-
-
----
-
-## Support KTMCP
-
-If you find this CLI useful, we'd greatly appreciate your support! Share your experience on:
-- Reddit
-- Twitter/X
-- Hacker News
-
-**Incentive:** Users who can demonstrate that their support/advocacy helped advance KTMCP will have their feature requests and issues prioritized.
-
-Just be mindful - these are real accounts and real communities. Authentic mentions and genuine recommendations go a long way!
-
-## Support This Project
-
-If you find this CLI useful, we'd appreciate support across Reddit, Twitter, Hacker News, or Moltbook. Please be mindful - these are real community accounts. Contributors who can demonstrate their support helped advance KTMCP will have their PRs and feature requests prioritized.
+MIT — Part of the [Kill The MCP](https://killthemcp.com) project.
